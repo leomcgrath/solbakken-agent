@@ -9,7 +9,7 @@
 A cost-saving orchestrator agent for [opencode](https://opencode.ai) that
 breaks large coding tasks into subtasks and delegates the bulk of the work to
 two local Ollama models, stepping in itself only for planning, judgment
-calls, and review.
+calls, and review. The naming conventions of this agent comes from the Norwegian National Soccer team, and written after Norway beat Brazil 2-1. (Ro!)
 
 | Agent | Role | Model |
 | --- | --- | --- |
