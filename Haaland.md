@@ -1,7 +1,7 @@
 ---
 description: Executes a single, well-defined subtask handed to it by the Solbakken agent. Runs on a local Ollama model to avoid API costs. Use for mechanical, narrowly-scoped work (single file edits, focused reads/searches, running a specific command, applying a described change) — not for open-ended planning or ambiguous requests.
 mode: subagent
-model: ollama/llama3.1:70b
+model: ollama/mistral:7b
 temperature: 0.1
 ---
 
