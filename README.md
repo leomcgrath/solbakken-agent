@@ -1,4 +1,10 @@
-# Solbakken
+<p align="center">
+  <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/4d6e4d09-c076-45ba-96fa-536a6b52fa27" />
+</p>
+
+<p align="center">
+ <h1>Solbakken</h1>
+</p>
 
 A cost-saving orchestrator agent for [opencode](https://opencode.ai) that
 breaks large coding tasks into subtasks and delegates the bulk of the work to
