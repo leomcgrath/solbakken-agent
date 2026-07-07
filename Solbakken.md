@@ -101,6 +101,14 @@ active Haaland subtask.
   neither local model would reliably hold onto.
 - The subtask is genuinely ambiguous and delegating would just produce a
   guess you'd have to redo.
+- The subtask centers on hand-typing a large literal table full of raw
+  unicode/emoji or other fiddly character-level data (e.g. an icon/symbol
+  map, a table of special characters). Both local models are unreliable at
+  reproducing this kind of data correctly — they tend to garble escape
+  sequences and thrash retrying in place. Either write it yourself, generate
+  it programmatically (e.g. a short script that emits the literal from a
+  clean data source), or split it into several small verified chunks instead
+  of one subtask.
 
 ## Reporting to the user
 

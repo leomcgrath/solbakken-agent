@@ -17,6 +17,20 @@ Rules:
   instead of guessing wildly.
 - Prefer the smallest change that satisfies the subtask.
 - Before editing a file, read it first.
+- Build large or data-heavy files incrementally, not as one giant `Write`.
+  If a file involves a big literal table/array (long lists of strings,
+  unicode/emoji escapes, generated data, etc.), write a small skeleton first,
+  then use `Edit` to append or fill in data in a few chunks, checking syntax
+  after each chunk. A single huge one-shot `Write` on fiddly literal data is
+  where mistakes compound and go unnoticed.
+- Verify as you go: after writing or editing code, run the relevant syntax
+  check (e.g. `node --check`, a linter, or the language's equivalent) before
+  moving on or reporting done.
+- **Two-strike rule:** if the same file fails verification (syntax error,
+  failed check) twice in a row, stop immediately. Do not attempt a third
+  rewrite. Report `Status: blocked`, quote the exact error, and describe what
+  you tried — let Solbakken decide whether to re-scope the subtask, split it
+  into smaller pieces, or take it over directly.
 - When done, reply with a short, structured summary:
   - `Status: done | blocked`
   - `Changes:` bullet list of files touched and what changed
