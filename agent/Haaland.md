@@ -1,7 +1,7 @@
 ---
-description: Executes a single, substantial coding subtask handed to it by the Solbakken agent. Runs on a local Ollama coding-specialized model (ornith:35b) — only one Haaland instance runs at a time. Use for the majority of real coding work (implementing changes, multi-file edits, debugging, anything needing a stronger model) — not for small mechanical/parallelizable work (route that to Nusa) and not for open-ended planning or ambiguous requests.
+description: Executes a single, substantial coding subtask handed to it by the Solbakken agent. Runs on a local Ollama coding-specialized model (qwen3-coder:30b-a3b-q8_0) — only one Haaland instance runs at a time. Use for the majority of real coding work (implementing changes, multi-file edits, debugging, anything needing a stronger model) — not for small mechanical/parallelizable work (route that to Nusa) and not for open-ended planning or ambiguous requests.
 mode: subagent
-model: ollama/ornith:35b
+model: ollama/qwen3-coder:30b-a3b-q8_0
 temperature: 0.1
 ---
 

@@ -13,10 +13,10 @@ calls, and review.
 
 - **Solbakken** (`primary`, runs on your configured paid/cloud model) — plans
   the work, splits it into subtasks, delegates, and reviews results.
-- **Haaland** (`subagent`, `ollama/ornith:35b`) — handles the majority of
+- **Haaland** (`subagent`, `ollama/qwen3-coder:30b-a3b-q8_0`) — handles the majority of
   real coding subtasks: implementing changes, multi-file edits, debugging.
   Only one instance runs at a time.
-- **Nusa** (`subagent`, `ollama/qwen2.5-coder:7b`) — handles small,
+- **Nusa** (`subagent`, `ollama/qwen3:8b`) — handles small,
   mechanical, parallelizable subtasks: focused reads/searches, running a
   command, single small edits. Light enough to run several instances
   concurrently.
@@ -32,9 +32,21 @@ logic.
 - Pull the two models Haaland and Nusa run on:
 
   ```sh
-  ollama pull ornith:35b
-  ollama pull qwen2.5-coder:7b
+  ollama pull qwen3-coder:30b-a3b-q8_0
+  ollama pull qwen3:8b
   ```
+
+- Nusa runs several instances concurrently, so start the Ollama server with
+  enough parallel request slots to actually process them at once instead of
+  queueing:
+
+  ```sh
+  OLLAMA_NUM_PARALLEL=4 ollama serve
+  ```
+
+  (If Ollama already runs as a background service, set `OLLAMA_NUM_PARALLEL=4`
+  in its environment — e.g. via `launchctl setenv OLLAMA_NUM_PARALLEL 4` on
+  macOS or a systemd unit override on Linux — and restart it.)
 
 - An `ollama` provider configured in your opencode config
   (`opencode.jsonc`/`opencode.json`) so opencode can reach the local Ollama
@@ -51,15 +63,15 @@ logic.
           "baseURL": "http://localhost:11434/v1"
         },
         "models": {
-          "qwen2.5-coder:7b": {
-            "name": "Qwen2.5 Coder 7B (local)",
+          "qwen3:8b": {
+            "name": "Qwen3 8B (local)",
             "limit": {
               "context": 32768,
               "output": 8192
             }
           },
-          "ornith:35b": {
-            "name": "Ornith 35B (local)",
+          "qwen3-coder:30b-a3b-q8_0": {
+            "name": "Qwen3 Coder 30B A3B Q8_0 (local)",
             "limit": {
               "context": 262144,
               "output": 8192
@@ -73,7 +85,7 @@ logic.
 
   Adjust `models` to whatever you've actually pulled/named locally — the
   names must match the `model:` field in `Haaland.md`/`Nusa.md`
-  (`ollama/ornith:35b`, `ollama/qwen2.5-coder:7b`).
+  (`ollama/qwen3-coder:30b-a3b-q8_0`, `ollama/qwen3:8b`).
 
 ## Install
 

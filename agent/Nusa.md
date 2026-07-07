@@ -1,7 +1,7 @@
 ---
-description: Executes a single, small, mechanical subtask handed to it by the Solbakken agent — the parallel-friendly overflow worker. Runs on a local Ollama model (qwen2.5-coder:7b), light enough to run several instances concurrently. Use for simple/parallelizable work (focused reads/searches, running a specific command, single small edits) — not substantial coding work (route that to Haaland) and not open-ended planning or ambiguous requests.
+description: Executes a single, small, mechanical subtask handed to it by the Solbakken agent — the parallel-friendly overflow worker. Runs on a local Ollama model (qwen3:8b), light enough to run several instances concurrently. Use for simple/parallelizable work (focused reads/searches, running a specific command, single small edits) — not substantial coding work (route that to Haaland) and not open-ended planning or ambiguous requests.
 mode: subagent
-model: ollama/qwen2.5-coder:7b
+model: ollama/qwen3:8b
 temperature: 0.1
 ---
 
