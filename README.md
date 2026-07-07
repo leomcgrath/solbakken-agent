@@ -1,4 +1,6 @@
-<img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/4d6e4d09-c076-45ba-96fa-536a6b52fa27" />
+<p align="center">
+  <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/4d6e4d09-c076-45ba-96fa-536a6b52fa27" />
+</p>
 
 
 # Solbakken
