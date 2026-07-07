@@ -29,24 +29,28 @@ logic.
 ## Prerequisites
 
 - [Ollama](https://ollama.com) installed and running locally.
-- Pull the two models Haaland and Nusa run on:
+- Pull the two models Haaland and Nusa run on, and give the server enough
+  parallel request slots — Nusa runs several instances concurrently, and by
+  default Ollama queues concurrent requests instead of processing them at
+  once:
 
   ```sh
   ollama pull qwen3-coder:30b-a3b-q8_0
   ollama pull qwen3:8b
-  ```
 
-- Nusa runs several instances concurrently, so start the Ollama server with
-  enough parallel request slots to actually process them at once instead of
-  queueing:
-
-  ```sh
+  # If you run `ollama serve` yourself (Linux, or manually on macOS):
   OLLAMA_NUM_PARALLEL=4 ollama serve
+
+  # If Ollama runs as a background app/service (macOS Ollama.app, systemd unit):
+  launchctl setenv OLLAMA_NUM_PARALLEL 4   # or a systemd env override on Linux
   ```
 
-  (If Ollama already runs as a background service, set `OLLAMA_NUM_PARALLEL=4`
-  in its environment — e.g. via `launchctl setenv OLLAMA_NUM_PARALLEL 4` on
-  macOS or a systemd unit override on Linux — and restart it.)
+  > Setting the env var only affects processes started *after* you set it.
+  > If Ollama was already running in the background, `launchctl setenv` (or
+  > the systemd override) won't retroactively change it — you must fully
+  > quit and relaunch the Ollama app/service afterward. Otherwise `ollama
+  > serve` will just fail with "address already in use" while the old,
+  > unconfigured instance keeps running.
 
 - An `ollama` provider configured in your opencode config
   (`opencode.jsonc`/`opencode.json`) so opencode can reach the local Ollama
@@ -109,12 +113,6 @@ logic.
    mkdir -p /path/to/project/.opencode/agent
    cp agent/Haaland.md agent/Nusa.md agent/Solbakken.md /path/to/project/.opencode/agent/
    ```
-
-3. **Set Solbakken's model.** Open the copy of `Solbakken.md` you just
-   placed and change the `model:` field in its frontmatter (it defaults to
-   `github-copilot/claude-opus-4.8`) to whatever paid/cloud model you want
-   driving the orchestration. This does not need to match your Ollama
-   setup — only `Haaland.md`/`Nusa.md` need to match Ollama.
 
 That's it — restart opencode (or start a new session) and `Solbakken`,
 `Haaland`, and `Nusa` will show up as available agents.
