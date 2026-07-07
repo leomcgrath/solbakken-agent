@@ -22,9 +22,9 @@ calls, and review.
   concurrently.
 
 This exists to save cost, not time: local models are slower than a strong
-cloud model, but free. Solbakken only orchestrates when a task is high-volume
-enough that the tokens saved by not writing it yourself outweigh the
-delegation overhead — see `Solbakken.md` for its full triage logic.
+cloud model, but free. Solbakken delegates by default whenever the change
+is cheap enough to hand off — see `Solbakken.md` for its full triage
+logic.
 
 ## Prerequisites
 
@@ -77,19 +77,35 @@ delegation overhead — see `Solbakken.md` for its full triage logic.
 
 ## Install
 
-Copy the three agent files into your opencode agent directory:
+1. **Get the files.** Clone this repo (or just download the three `.md`
+   files from it):
 
-```sh
-# Global, available in all projects:
-cp Haaland.md Nusa.md Solbakken.md ~/.config/opencode/agent/
+   ```sh
+   git clone https://github.com/leomcgrath/solbakken-agent.git
+   cd solbakken-agent
+   ```
 
-# Or per-project:
-cp Haaland.md Nusa.md Solbakken.md /path/to/project/.opencode/agent/
-```
+2. **Copy the three agent files** into an opencode agent directory. Pick
+   one:
 
-`Solbakken.md` sets `model: github-copilot/claude-opus-4.8` — change this to
-whatever primary model you want driving the orchestration; it doesn't need
-to match your Ollama setup.
+   ```sh
+   # Option A — global: available in every project
+   mkdir -p ~/.config/opencode/agent
+   cp agent/Haaland.md agent/Nusa.md agent/Solbakken.md ~/.config/opencode/agent/
+
+   # Option B — per-project: available only in one project
+   mkdir -p /path/to/project/.opencode/agent
+   cp agent/Haaland.md agent/Nusa.md agent/Solbakken.md /path/to/project/.opencode/agent/
+   ```
+
+3. **Set Solbakken's model.** Open the copy of `Solbakken.md` you just
+   placed and change the `model:` field in its frontmatter (it defaults to
+   `github-copilot/claude-opus-4.8`) to whatever paid/cloud model you want
+   driving the orchestration. This does not need to match your Ollama
+   setup — only `Haaland.md`/`Nusa.md` need to match Ollama.
+
+That's it — restart opencode (or start a new session) and `Solbakken`,
+`Haaland`, and `Nusa` will show up as available agents.
 
 ## Usage
 
@@ -98,9 +114,10 @@ It will plan the work with `todowrite`, delegate subtasks to `Haaland`
 (sequentially) and `Nusa` (batched in parallel), review results against
 `git diff`/test output, and report back what was delegated vs. done itself.
 
-For small or single-file tasks, Solbakken is designed to skip delegation
-entirely and just do the work directly — orchestration overhead only pays
-off on high-volume, decomposable work.
+Solbakken delegates by default whenever it's cheaper than writing the
+change itself — including small, single-file edits — and only keeps work
+for itself when a change is trivial (a one-liner) or needs judgment no
+local model can be trusted with.
 
 ## License
 
