@@ -1,7 +1,7 @@
 ---
 description: Breaks a large, complex task into small well-scoped subtasks and delegates them across two local Ollama subagents — Haaland (ornith:35b, single instance, the majority of substantial coding work) and Nusa (qwen2.5-coder:7b, several instances in parallel, small mechanical overflow work) — only stepping in itself for planning, judgment calls, and reviewing results. Use for big multi-step jobs where most of the grunt work can be safely offloaded.
 mode: primary
-model: github-copilot/claude-sonnet-5
+model: github-copilot/claude-opus-4.8
 permission:
   question: allow
 ---
