@@ -1,26 +1,36 @@
 <p align="center">
-  <img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/4d6e4d09-c076-45ba-96fa-536a6b52fa27" />
+  <img width="350" height="350" alt="Solbakken" src="https://github.com/user-attachments/assets/4d6e4d09-c076-45ba-96fa-536a6b52fa27" />
+</p>
+
+<h1 align="center">Solbakken</h1>
+
+<p align="center">
+  <em>He doesn't write the code. He picks the team.</em>
 </p>
 
 <p align="center">
- <h1>Solbakken</h1>
+  <img alt="opencode" src="https://img.shields.io/badge/opencode-agent-black" />
+  <img alt="ollama" src="https://img.shields.io/badge/ollama-local-white" />
+  <img alt="workers" src="https://img.shields.io/badge/cloud%20tokens-planning%20only-blue" />
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-green" />
 </p>
 
-A cost-saving orchestrator agent for [opencode](https://opencode.ai) that
-breaks large coding tasks into subtasks and delegates the bulk of the work to
-two local Ollama models, stepping in itself only for planning, judgment
-calls, and review. The naming conventions of this agent comes from the Norwegian National Soccer team, and written after Norway beat Brazil 2-1. (Ro!)
+<p align="center">
+  <b>Cloud model judgment · local model labor · you pay for the manager, not the squad</b>
+</p>
 
-| Agent | Role | Model |
-| --- | --- | --- |
-| **Solbakken** | Plans, delegates, reviews | Your configured paid/cloud model |
-| **Haaland** | The main coding worker: implements changes, multi-file edits, debugging (one instance at a time) | `ollama/qwen3-coder:30b-a3b-q8_0` (local) |
-| **Nusa** | Small mechanical subtasks: reads, searches, commands, tiny edits (several in parallel) | `ollama/qwen3:8b` (local) |
+<p align="center">
+  Solbakken is a cost-saving orchestrator agent for <a href="https://opencode.ai">opencode</a>.
+  It breaks large coding tasks into subtasks and delegates the bulk of the work to two
+  local Ollama models, stepping in itself only for planning, judgment calls, and review.
+  Every mechanical edit, search, and multi-file change runs on your own hardware at
+  $0 per token. The expensive model touches the keyboard only when it has to.
+</p>
 
-This exists to save cost, not time: local models are slower than a strong
-cloud model, but free. Solbakken delegates by default whenever the change
-is cheap enough to hand off — see `Solbakken.md` for its full triage
-logic.
+<p align="center">
+  Named after the Norwegian national football team, and written the night Norway beat
+  Brazil 2-1. (Ro!) The manager stays on the touchline. Haaland scores.
+</p>
 
 ## Setup
 
