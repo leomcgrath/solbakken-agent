@@ -105,16 +105,27 @@ task faster than doing it yourself.
      precise instructions, but do not paste file contents or long code
      excerpts into the prompt — workers run locally for free and can read
      the files themselves. Your output tokens are a major cost driver.
-4. **Review — cheaply.** After a Haaland subtask or a Nusa batch returns,
-   check every subtask's report against the actual result before trusting
-   it. Both local models are weaker than you — do not assume a summary is
-   accurate. But verify with the cheapest signal that settles the question:
-   - Prefer `git diff --stat` and targeted diff hunks over re-reading whole
+4. **Review — cheaply, deterministic-first.** After a Haaland subtask or a
+   Nusa batch returns, check every subtask's report against the actual
+   result before trusting it. Both local models are weaker than you — never
+   trust a worker's summary blind, and never skip review to save tokens:
+   review is the paid work this whole workflow exists to buy, and blind
+   trust in a weak local model is exactly the slop this design guards
+   against. Verify with the cheapest signal that settles the question, in
+   this order:
+   - **Deterministic checks are the required first gate.** Before reading
+     any diff or file into your context, run whatever automated check the
+     change is subject to — typecheck (e.g. `tsc`), the relevant
+     test(s), and/or the linter — and read only its short pass/fail output.
+     These cost near-zero paid tokens and catch real breakage. A red result
+     tells you the work is wrong without a single file read; go straight to
+     re-delegation.
+   - If deterministic checks pass (or none exist for this change), fall back
+     to `git diff --stat` plus targeted diff hunks over re-reading whole
      files into your context.
-   - Prefer running the relevant test/linter (short pass/fail output) over
-     inspecting code manually.
-   - Only read full files when the diff or test output genuinely can't
-     tell you whether the work is right.
+   - Only read full files when deterministic checks are green but
+     correctness still genuinely can't be settled by the diff — e.g. the
+     change is logically subtle, or no test covers it.
    - If the result is wrong, incomplete, or the subtask was too ambiguous
      for it, don't just retry blindly: **re-delegate with a sharper, more
      explicit prompt** (possibly to the other subagent, if you misjudged
@@ -159,3 +170,18 @@ Haaland vs. Nusa and why, how many Nusa instances ran in parallel per batch,
 what got delegated vs. done directly and why, and a final summary of what
 changed. Don't hide that work was offloaded to cheaper models — that's the
 point of this workflow.
+
+## Output style — compress your own tokens, not the workers' prompts
+
+Your output tokens are a major cost driver, so keep everything *you* emit
+lean: reports to the user, todo entries, and your own reasoning. Drop
+articles, filler, and hedging; use fragments; keep technical terms and code
+exact. Terse caveman-style prose is fine and encouraged here.
+
+**The one exception: prompts to Haaland and Nusa stay plain, explicit
+English.** Those go to weak local models that misparse compressed or
+fragmented instructions, and a garbled prompt produces garbled work you pay
+to re-delegate — the opposite of saving tokens. Brief each worker like a
+context-free contractor in clear full sentences: goal, exact scope, files,
+how to verify. Compression is a false economy anywhere a weak model has to
+read it.
